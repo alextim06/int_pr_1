@@ -14,6 +14,8 @@ class Patient:
         self.birth_date = Date()
         self.phone = ""
         self.temperature = 0.0
+        self.skin_color = (0, 0, 0)   # RGB
+
 
 def input_passport():
     while True:
@@ -59,8 +61,20 @@ def input_temperature():
         except:
             print("Ошибка! Не корректные данные")
 
+def input_skin_color():
+    while True:
+        c = input("Введите цвет кожи в формате R,G,B (например 255,200,150): ").strip()
+        m = re.match(r'^(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})$', c)
+        if m:
+            r, g, b = map(int, m.groups())
+            if 0 <= r <= 255 and 0 <= g <= 255 and 0 <= b <= 255:
+                return (r, g, b)
+            print("Ошибка! Каждое значение должно быть от 0 до 255")
+        else:
+            print("Ошибка! Не корректные данные")
+
 def ask():
-    patient = Patient
+    patient = Patient()
 
     patient.passport = input_passport()
 
@@ -72,6 +86,9 @@ def ask():
     patient.phone = input_phone()
 
     patient.temperature = input_temperature()
+
+    patient.skin_color = input_skin_color()
+
     patient_list.append(patient)
 
 def show(patient):
@@ -82,9 +99,11 @@ def show(patient):
     print(f"Дата рождения: {patient.birth_date.yyyy:04d}-{patient.birth_date.mm:02d}-{patient.birth_date.dd:02d}")
     print(f"Телефон: {patient.phone}")
     print(f"Температура: {patient.temperature:.2f}")
+    print(f"Цвет кожи (RGB): {patient.skin_color[0]}, {patient.skin_color[1]}, {patient.skin_color[2]}")
 
 
 def main():
+    global patient_list
     patient_list = []
     while True:
         print("Хотите заполнить данные пациента? (Y/N)")
