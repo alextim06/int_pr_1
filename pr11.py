@@ -17,6 +17,8 @@ class Patient:
         self.skin_color = (0, 0, 0)  
 
 
+
+
 def input_passport():
     while True:
         p = input("Введите паспорт 11 11-111111: ").strip()
